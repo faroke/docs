@@ -1,0 +1,2585 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Tulip API",
+    "version": "v2"
+  },
+  "servers": [
+    {
+      "url": "https://api.mytulip.io/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Renters"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Contracts"
+    },
+    {
+      "name": "Geo"
+    }
+  ],
+  "paths": {
+    "/renters": {
+      "get": {
+        "tags": [
+          "Renters"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -X GET --location 'https://api.mytulip.io/v2/renters' -H 'Key: MY_API_KEY'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "status": "success",
+                    "renters": {
+                      "1BCIJ03aqLArez4oEqbkBM1IwwE3": true,
+                      "whAC3jBSE2MeVLPkeAcO1cIv6kW4": true
+                    }
+                  },
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "renters": {
+                      "type": "object",
+                      "description": "La liste des loueurs lié à la clef API",
+                      "properties": {
+                        "renter_id": {
+                          "type": "boolean",
+                          "description": "L'identifiant tulip du loueur et un boolean indiquant s'il est activé ou non."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "description": "Afficher les loueurs"
+      },
+      "post": {
+        "tags": [
+          "Renters"
+        ],
+        "description": "Lier un loueur à la clef API",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/postRenterID"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success"
+                },
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/renters/{uid}": {
+      "get": {
+        "tags": [
+          "Renters"
+        ],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "description": "L'identifiant Tulip du loueur",
+            "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "string"
+                    }
+                }
+            }
+          }
+        ],
+        "description": "Obtenir des informations sur le loueur",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "renter": {
+                    "uid": "PrBvAU986dksDi2FS14L",
+                    "company": {
+                      "company_name": "My Company",
+                      "last_name": "Doe",
+                      "first_name": "John",
+                      "email": "john.doe@mycompany.com",
+                      "phone_number": "0606060606",
+                      "address": "3 rue laffite",
+                      "city": "Paris",
+                      "zipcode": "7502",
+                      "country": "France"
+                    },
+                    "options": {
+                      "option": true,
+                      "inclusion": false,
+                      "products": [
+                        {
+                          "bike": {
+                            "translations": {
+                              "en": "Bike",
+                              "fr": "Vélo"
+                            },
+                            "subtypes": [
+                              {
+                                "type": "standard",
+                                "translations": {
+                                  "en": "Standard",
+                                  "fr": "Musculaire"
+                                }
+                              },
+                              {
+                                "type": "electric",
+                                "translations": {
+                                  "en": "Electric",
+                                  "fr": "Electrique"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "renter": {
+                      "type": "object",
+                      "properties": {
+                        "uid": {
+                          "type": "string"
+                        },
+                        "company": {
+                          "type": "object",
+                          "properties": {
+                            "company_name": {
+                              "type": "string"
+                            },
+                            "last_name": {
+                              "type": "string"
+                            },
+                            "first_name": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "phone_number": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "city": {
+                              "type": "string"
+                            },
+                            "zipcode": {
+                              "type": "string"
+                            },
+                            "country": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "options": {
+                          "type": "object",
+                          "properties": {
+                            "option": {
+                              "type": "boolean"
+                            },
+                            "inclusion": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "products": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                              "translations": {
+                                "type": "object",
+                                "properties": {
+                                  "en": {
+                                    "type": "string"
+                                  },
+                                  "fr": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "subtypes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "translations": {
+                                      "type": "object",
+                                      "properties": {
+                                        "en": {
+                                          "type": "string"
+                                        },
+                                        "fr": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Afficher les produits",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uid"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Créer un produit",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/postProduct"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Afficher un produit",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/product_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Mettre à jour un produit",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/product_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/patchProduct"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Supprimer un produit",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/product_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/contracts": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Afficher les contrats",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uid"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/test"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "success"
+                      ]
+                    },
+                    "contracts": {
+                      "type": "array",
+                      "description": "La liste des contrats",
+                      "items": {
+                        "$ref": "#/components/schemas/contract"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Créer un contrat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/preview"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/postContract"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "contract": {
+                      "$ref": "#/components/schemas/contract"
+                    }
+                  }
+                },
+                "examples": {
+                  "LCD": {
+                    "$ref": "#/components/examples/resCreateLCD"
+                  },
+                  "LLD Seyna": {
+                    "$ref": "#/components/examples/resCreateLLD"
+                  },
+                  "LLD Wakam": {
+                    "$ref": "#/components/examples/resCreateLLDWakam"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/contracts/{cid}": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Afficher un contrat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cid"
+          },
+          {
+            "$ref": "#/components/parameters/uid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Résilier un contrat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cid"
+          },
+          {
+            "$ref": "#/components/parameters/preview"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/deleteContract"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Mettre à jour un contrat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cid"
+          },
+          {
+            "$ref": "#/components/parameters/preview"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/patchContract"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/contracts/{cid}/products": {
+      "post": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Ajouter un produit à un contrat existant",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cid"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/postProductInContract"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Résilier un produit existant dans un contrat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cid"
+          },
+          {
+            "$ref": "#/components/parameters/preview"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/deleteProductInContract"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/geo/getCitiesByZipcode/FR/{zipcode}": {
+      "get": {
+        "tags": [
+          "Geo"
+        ],
+        "summary": "Récupérer un format de ville",
+        "description": "Récupéré le bon format de ville pour la déclaration de contrat Wakam",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/zipcode"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getCitiesByZipcode"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "key",
+        "description": "La clé API fourni par Tulip"
+      }
+    },
+    "schemas": {
+      "product": {
+        "type": "object",
+        "description": "Le produit",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "L'identifiant Tulip du produit"
+          },
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur associé au produit"
+          },
+          "title": {
+            "type": "string",
+            "description": "Le titre du produit"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "Le type de produit",
+            "enum": [
+              "bike"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Une description du produit"
+          },
+          "value_excl": {
+            "type": "number",
+            "description": "La valeur HT du produit"
+          },
+          "documents": {
+            "type": "array",
+            "description": "Les documents associé au produit",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_date": {
+            "type": "string",
+            "description": "La date de création du produit (géré par Tulip)",
+            "format": "date-time"
+          },
+          "updated_date": {
+            "type": "string",
+            "description": "La date de mise à jour du produit (géré par Tulip)",
+            "format": "date-time"
+          },
+          "purchased_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date d'achat du produit"
+          },
+          "data": {
+            "$ref": "#/components/schemas/product_data"
+          }
+        }
+      },
+      "contract": {
+        "type": "object",
+        "description": "Le contrat",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur"
+          },
+          "cid": {
+            "type": "string",
+            "description": "L'identifiant Tulip du contrat"
+          },
+          "created_date": {
+            "type": "string",
+            "description": "La date de création du contrat (géré par Tulip)"
+          },
+          "updated_date": {
+            "type": "string",
+            "description": "La date de la dernière mise à jour du contrat (géré par Tulip)"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de début du contrat"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de fin du contrat"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "terminated",
+              "closed",
+              "cancel"
+            ],
+            "description": "L'état actuel du contrat"
+          },
+          "reason": {
+            "type": "string",
+            "description": "La raison de résiliation du contrat"
+          },
+          "contract_type": {
+            "type": "string",
+            "enum": [
+              "LLD"
+            ],
+            "description": "Le type de contrat (influe sur le prix du contrat et les informations nécessaires)"
+          },
+          "test": {
+            "type": "boolean",
+            "description": "Le mode du contrat : test ou live"
+          },
+          "price": {
+            "type": "number",
+            "description": "Le montant TTC du contrat"
+          },
+          "pricing_version": {
+            "type": "string",
+            "description": "La version de pricing du contrat"
+          },
+          "products": {
+            "type": "object",
+            "description": "La liste des produits associé au contrat",
+            "properties": {
+              "contract_product_id_1": {
+                "$ref": "#/components/schemas/product_in_contract"
+              }
+            }
+          },
+          "options": {
+            "type": "array",
+            "description": "La liste des options présente sur le contrat",
+            "items": {
+              "type": "string",
+              "enum": [
+                "break",
+                "theft",
+                "individual",
+                "company"
+              ]
+            }
+          },
+          "company": {
+            "$ref": "#/components/schemas/company_in_contract"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/individual_in_contrat"
+          },
+          "receipts": {
+            "type": "array",
+            "description": "La liste de reçu associé au contrat",
+            "items": {
+              "type": "string"
+            }
+          },
+          "documents": {
+            "description": "La liste des documents associé au contrat",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "receipt": {
+        "type": "object",
+        "description": "Le reçu",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur associé"
+          },
+          "cid": {
+            "type": "string",
+            "description": "L'identifiant Tulip du contrat associé"
+          },
+          "receipt_id": {
+            "type": "string",
+            "description": "L'identifiant Tulip du reçu"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de création du reçu (géré par Tulip)"
+          },
+          "updated_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de mise à jour du reçu (géré par Tulip)"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de début"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de fin"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de débit ou de remboursement"
+          },
+          "payment_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date du paiement"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Le montant à payer ou à recevoir (valeur négative)"
+          },
+          "status": {
+            "type": "string",
+            "description": "Le status du paiement du reçu",
+            "enum": [
+              "waiting-for",
+              "paid",
+              "cancel"
+            ]
+          },
+          "test": {
+            "type": "boolean",
+            "description": "Le reçu en test ou en live"
+          }
+        }
+      },
+      "document": {
+        "type": "object",
+        "description": "Le document",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip du propriétaire du document"
+          },
+          "cid": {
+            "type": "string",
+            "description": "L'identifiant Tulip du contrat auquel le document est lié"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "L'identifiant Tulip du produit auquel le document est lié"
+          },
+          "receipt_id": {
+            "type": "string",
+            "description": "L'identifiant Tulip du reçu auquel le document est lié"
+          },
+          "document_id": {
+            "type": "string",
+            "description": "L'identifiant Tulip du document"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de création du document (géré par Tulip)"
+          },
+          "url": {
+            "type": "string",
+            "format": "url",
+            "description": "L'url permettant d'acceder au document"
+          },
+          "title": {
+            "type": "string",
+            "description": "Le titre du document"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/document_metadata"
+          }
+        }
+      },
+      "company_in_contract": {
+        "type": "object",
+        "description": "Les informations sur la companie associé au contrat",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Numéro et nom de la rue"
+          },
+          "zipcode": {
+            "type": "string",
+            "description": "Code Postal"
+          },
+          "city": {
+            "type": "string",
+            "description": "Ville"
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Nom de la compagnie"
+          },
+          "siren": {
+            "type": "string",
+            "description": "Numéro de SIREN"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "Prénom du responsable"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Nom du responsable"
+          }
+        }
+      },
+      "individual_in_contrat": {
+        "type": "object",
+        "description": "Les informations relative au particulier",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "description": "Prénom"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Nom"
+          },
+          "address": {
+            "type": "string",
+            "description": "Numéro et nom de rue"
+          },
+          "zipcode": {
+            "type": "string",
+            "description": "Code postal"
+          },
+          "city": {
+            "type": "string",
+            "description": "Ville"
+          },
+          "country": {
+            "type": "string",
+            "description": "Pays, la France par défaut",
+            "enum": [
+              "FR"
+            ]
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Numéro de téléphone"
+          },
+          "email": {
+            "type": "string",
+            "description": "Adresse mail"
+          }
+        }
+      },
+      "product_in_contract": {
+        "type": "object",
+        "description": "Informations sur un produit associé à un contrat",
+        "properties": {
+          "product_history": {
+            "type": "string",
+            "description": "L'identifiant correspondant à la version du produit indiqué dans le champ product_id"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "Le type de produit assuré",
+            "enum": [
+              "bike"
+            ]
+          },
+          "product_title": {
+            "type": "string",
+            "description": "Le titre associé au produit"
+          },
+          "documents": {
+            "type": "array",
+            "description": "Les documents associé au produit",
+            "items": {
+              "type": "string"
+            }
+          },
+          "price": {
+            "type": "number",
+            "description": "La valeur TTC du produit"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date d'entrée du produit dans le contrat (la start_date du contrat par défaut)"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de sortie du produit dans le contrat (la end_date du contrat par défaut)"
+          },
+          "status": {
+            "type": "string",
+            "description": "Le status du produit dans le contrat (le même que celui du contrat par défaut)",
+            "enum": [
+              "terminated",
+              "open",
+              "closed",
+              "cancel"
+            ]
+          },
+          "reason": {
+            "description": "La raison de la résiliation du contrat",
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/product_in_contract_data"
+          }
+        }
+      },
+      "inline_response_200": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "products": {
+            "type": "array",
+            "description": "La liste des produits",
+            "items": {
+              "$ref": "#/components/schemas/product"
+            }
+          }
+        }
+      },
+      "product_data": {
+        "type": "object",
+        "description": "Les informations spécifique à un type de produit",
+        "properties": {
+          "product_subtype": {
+            "type": "string",
+            "description": "Le sous type du produit (ex: electric)"
+          },
+          "brand": {
+            "type": "string",
+            "description": "La marque du produit"
+          },
+          "model": {
+            "type": "string",
+            "description": "Le modèle du produit"
+          }
+        }
+      },
+      "product_body": {
+        "required": [
+          "data",
+          "product_type",
+          "title",
+          "uid",
+          "value_excl"
+        ],
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "Le type de produit",
+            "enum": [
+              "bike"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "Le titre du produit"
+          },
+          "description": {
+            "type": "string",
+            "description": "Une description du produit"
+          },
+          "data": {
+            "$ref": "#/components/schemas/product_data"
+          },
+          "purchased_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date d'achat du produit"
+          },
+          "value_excl": {
+            "type": "number",
+            "description": "La valeur HTT du produit"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "product": {
+            "$ref": "#/components/schemas/product"
+          }
+        }
+      },
+      "product_product_id_body": {
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "Le type de produit",
+            "enum": [
+              "bike"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "Le titre du produit"
+          },
+          "description": {
+            "type": "string",
+            "description": "La description du produit"
+          },
+          "data": {
+            "$ref": "#/components/schemas/product_data"
+          },
+          "purchased_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date d'achat du produit"
+          },
+          "value_excl": {
+            "type": "number",
+            "description": "La valeur HTT du produit"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "properties": {
+          "status": {
+            "description": "Le status de la requête",
+            "type": "string",
+            "enum": [
+              "success"
+            ]
+          }
+        }
+      },
+      "contract_company": {
+        "description": "Informations sur la compagnie lié au contrat",
+        "required": [
+          "company_name",
+          "address",
+          "zipcode",
+          "city",
+          "siren",
+          "first_name",
+          "last_name"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Numéro et nom de la rue"
+          },
+          "zipcode": {
+            "type": "string",
+            "description": "Code postal"
+          },
+          "city": {
+            "type": "string",
+            "description": "Ville"
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Nom de la compagnie"
+          },
+          "siren": {
+            "type": "string",
+            "description": "Numéro de SIREN"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "Prénom du responsable"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Nom du responsable"
+          }
+        }
+      },
+      "contract_individual": {
+        "description": "Information sur l'individu associé au contrat",
+        "required": [
+          "address",
+          "city",
+          "first_name",
+          "last_name",
+          "phone_number",
+          "zipcode"
+        ],
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "description": "Prénom"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Nom"
+          },
+          "address": {
+            "type": "string",
+            "description": "Numéro et nom de la rue"
+          },
+          "zipcode": {
+            "type": "string",
+            "description": "Code postal"
+          },
+          "city": {
+            "type": "string",
+            "description": "Ville"
+          },
+          "country": {
+            "type": "string",
+            "description": "Pays (France par défaut)",
+            "enum": [
+              "FR"
+            ]
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Numéro de téléphone"
+          },
+          "mail": {
+            "type": "string",
+            "description": "Adresse mail"
+          }
+        }
+      },
+      "contract_data": {
+        "description": "Informations spécifique à un type de produit",
+        "required": [
+          "product_marked",
+          "user_name"
+        ],
+        "type": "object",
+        "properties": {
+          "product_marked": {
+            "type": "string",
+            "description": "Numéro de marquage du vélo"
+          },
+          "user_name": {
+            "type": "string",
+            "description": "Nom associé au produit"
+          },
+          "internal_id": {
+            "type": "string",
+            "description": "Identifiant supplémentaire pour le client (sans implications)"
+          },
+          "purchased_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date d'achat du produit"
+          }
+        }
+      },
+      "contract_products": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/contract_products_without_product_id"
+          },
+          {
+            "$ref": "#/components/schemas/contract_products_with_product_id"
+          }
+        ]
+      },
+      "contract_products_without_product_id": {
+        "title": "Définir le produit dans le contrat",
+        "description": "Liste des produits associé au contrat",
+        "required": [
+          "product_type",
+          "product_subtype",
+          "value_excl",
+          "brand",
+          "model",
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "product_type": {
+            "$ref": "#/components/schemas/product/properties/product_type"
+          },
+          "product_subtype": {
+            "$ref": "#/components/schemas/product_data/properties/product_subtype"
+          },
+          "value_excl": {
+            "$ref": "#/components/schemas/product/properties/value_excl"
+          },
+          "brand": {
+            "$ref": "#/components/schemas/product_data/properties/brand"
+          },
+          "model": {
+            "$ref": "#/components/schemas/product_data/properties/model"
+          },
+          "data": {
+            "$ref": "#/components/schemas/contract_data"
+          }
+        }
+      },
+      "contract_products_with_product_id": {
+        "title": "Définir un produit existant",
+        "description": "Liste des produits associé au contrat",
+        "required": [
+          "data",
+          "product_id"
+        ],
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "L'identifiant du produit"
+          },
+          "data": {
+            "$ref": "#/components/schemas/contract_data"
+          }
+        }
+      },
+      "contract_body": {
+        "required": [
+          "contract_type",
+          "end_date",
+          "options",
+          "products",
+          "uid"
+        ],
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de début du contrat"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de fin du contrat (La date actuel sera appliqué par défaut)"
+          },
+          "contract_type": {
+            "type": "string",
+            "enum": [
+              "LCD",
+              "LMD",
+              "LLD"
+            ]
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "break",
+                "theft",
+                "individual",
+                "company",
+                "home_to_work",
+                "pro",
+                "transporter",
+                "sharing",
+                "assistance",
+                "loa",
+                "ia",
+                "rc"
+              ]
+            }
+          },
+          "company": {
+            "$ref": "#/components/schemas/contract_company"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/contract_individual"
+          },
+          "products": {
+            "type": "array",
+            "description": "La liste des produits",
+            "items": {
+              "$ref": "#/components/schemas/contract_products"
+            }
+          }
+        }
+      },
+      "simple_quote_body": {
+        "required": [
+          "uid",
+          "end_date",
+          "contract_type",
+          "options",
+          "products"
+        ],
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/contract_body/properties/uid"
+          },
+          "start_date": {
+            "$ref": "#/components/schemas/contract_body/properties/start_date"
+          },
+          "end_date": {
+            "$ref": "#/components/schemas/contract_body/properties/end_date"
+          },
+          "contract_type": {
+            "$ref": "#/components/schemas/contract_body/properties/contract_type"
+          },
+          "options": {
+            "$ref": "#/components/schemas/contract_body/properties/options"
+          },
+          "products": {
+            "$ref": "#/components/schemas/contract_body/properties/products"
+          },
+          "company": {
+            "$ref": "#/components/schemas/contract_company"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/contract_individual"
+          }
+        }
+      },
+      "put_contract_body": {
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de début du contrat"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de fin du contrat"
+          },
+          "products": {
+            "type": "object",
+            "description": "La liste de produits",
+            "additionalProperties": {
+              "type": "object",
+              "description": "L'identifiant du produit dans le contrat (uuid)",
+              "properties": {
+                "product_marked": {
+                  "type": "string",
+                  "description": "Le numéro de marquage du vélo"
+                },
+                "user_name": {
+                  "type": "string",
+                  "description": "Le nom associé au produit"
+                },
+                "purchased_date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "La date d'achat du produit"
+                },
+                "internal_id": {
+                  "type": "string",
+                  "description": "Un indentifiant supplémentaire pour le client (aucune implication)"
+                }
+              }
+            }
+          },
+          "company": {
+            "$ref": "#/components/schemas/company_in_contract"
+          },
+          "individual": {
+            "$ref": "#/components/schemas/individual_in_contrat"
+          }
+        }
+      },
+      "contract_delete_body": {
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "La raison de la résilation"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de résiliation (la date actuel par défaut)"
+          }
+        }
+      },
+      "product_in_contract_delete_body": {
+        "required": [
+          "reason",
+          "products"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "La raison de la résiliation"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de résiliation (la date actuel par défaut)"
+          },
+          "products": {
+            "type": "array",
+            "description": "La liste des produits à résilier",
+            "items": {
+              "type": "string",
+              "description": "L'identifiant du produit dans le contrat (uuid)"
+            }
+          }
+        }
+      },
+      "post_product_in_contract": {
+        "required": [
+          "uid",
+          "products"
+        ],
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "L'identifiant Tulip de l'utilisateur"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date de début des produits ajoutés"
+          },
+          "products": {
+            "type": "array",
+            "description": "La liste des produits",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "description": "L'identifiant du produit"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "product_marked",
+                    "user_name"
+                  ],
+                  "properties": {
+                    "product_marked": {
+                      "type": "string",
+                      "description": "Le numéro de marquage du vélo"
+                    },
+                    "user_name": {
+                      "type": "string",
+                      "description": "Le nom associé au produit"
+                    },
+                    "internal_id": {
+                      "type": "string",
+                      "description": "Un identifiant supplémentaire pour le client (aucune implication)"
+                    },
+                    "purchased_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "La date d'achat du produit"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "inline_response_200_3": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "contract": {
+            "$ref": "#/components/schemas/contract"
+          }
+        }
+      },
+      "inline_response_200_4": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "receipts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/receipt"
+            }
+          }
+        }
+      },
+      "inline_response_200_5": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "receipt": {
+            "$ref": "#/components/schemas/receipt"
+          }
+        }
+      },
+      "inline_response_200_6": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "documents": {
+            "type": "array",
+            "description": "La liste des documents",
+            "items": {
+              "$ref": "#/components/schemas/document"
+            }
+          }
+        }
+      },
+      "inline_response_200_7": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Le status de la requête",
+            "enum": [
+              "success"
+            ]
+          },
+          "document": {
+            "$ref": "#/components/schemas/document"
+          }
+        }
+      },
+      "document_metadata": {
+        "type": "object",
+        "description": "Les metadatas associé au document",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Le type de document"
+          }
+        }
+      },
+      "product_in_contract_data": {
+        "type": "object",
+        "description": "Les informations relative à un type de produit",
+        "properties": {
+          "product_marked": {
+            "type": "string",
+            "description": "Le numéro de marquage d'un vélo"
+          },
+          "internal_id": {
+            "type": "string",
+            "description": "Un identifiant supplémentaire sans implications"
+          },
+          "user_name": {
+            "type": "string",
+            "description": "Le nom du bénéficiaire du produit"
+          },
+          "purchased_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "La date d'achat du produit"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "status",
+          "type",
+          "message",
+          "execution_id"
+        ],
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "execution_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "uid": {
+        "name": "uid",
+        "in": "query",
+        "description": "L'identifiant Tulip de l'utilisateur",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "cid": {
+        "name": "cid",
+        "in": "path",
+        "required": true,
+        "description": "L'identifiant Tulip du contrat",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "product_id": {
+        "name": "product_id",
+        "in": "path",
+        "required": true,
+        "description": "L'identifiant Tulip du produit",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "receipt_id": {
+        "name": "receipt_id",
+        "in": "path",
+        "required": true,
+        "description": "L'identifiant tulip du récépissé",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "document_id": {
+        "name": "document_id",
+        "in": "path",
+        "required": true,
+        "description": "L'identifiant Tulip du document",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "skip": {
+        "name": "skip",
+        "in": "query",
+        "description": "Le nombre d'éléments à passer (pagination)",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Le nombre maximum d'éléments à afficher (pagination)",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "preview": {
+        "name": "preview",
+        "in": "query",
+        "description": "Lancer la requête en mode devis (La requête ne sera pas appliqué)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "test": {
+        "name": "test",
+        "in": "query",
+        "description": "Afficher les éléments en test",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "country": {
+        "name": "country",
+        "in": "path",
+        "description": "Le pays",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "zipcode": {
+        "name": "zipcode",
+        "in": "path",
+        "description": "Le Code postal",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": "error",
+              "type": "bad_request",
+              "message": "bad request",
+              "execution_id": "dhsqjdqjs7897Jdjhqsjhdsq"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": "error",
+              "type": "unauthorized",
+              "message": "The authorization credentials provided for the request are invalid.",
+              "execution_id": "dhsqjdqjs7897Jdjhqsjhdsq"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": "error",
+              "type": "server",
+              "message": "Internal Server Error",
+              "execution_id": "dhsqjdqjs7897Jdjhqsjhdsq"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "getCitiesByZipcode": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": "success",
+              "cities": [
+                "PARIS-15E-ARRONDISSEMENT"
+              ],
+              "execution_id": "dsd978kljkl"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "postRenterID": {
+        "content": {
+          "application/json": {
+            "example": {
+              "renter_id": "2BCIJ03aqLArez4oEqbkBM1IwwE3"
+            },
+            "schema": {
+              "properties": {
+                "renter_id": {
+                  "type": "string",
+                  "description": "L'identifiant Tulip du loueur"
+                }
+              }
+            }
+          }
+        }
+      },
+      "postProduct": {
+        "description": "Body",
+        "content": {
+          "application/json": {
+            "example": {
+              "uid": "dsqjdyunppoi978nklj",
+              "product_type": "bike",
+              "title": "mon titre de produit",
+              "description": "La description de mon produit",
+              "data": {
+                "product_subtype": "electric",
+                "brand": "MADE",
+                "model": "Made x Veloretti"
+              },
+              "value_excl": 525
+            },
+            "schema": {
+              "$ref": "#/components/schemas/product_body"
+            }
+          }
+        }
+      },
+      "patchProduct": {
+        "description": "Body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/product_product_id_body"
+            }
+          }
+        }
+      },
+      "postContract": {
+        "description": "Body",
+        "content": {
+          "application/json": {
+            "examples": {
+              "LCD": {
+                "$ref": "#/components/examples/createLCD2ProductType"
+              },
+              "LMD": {
+                "$ref": "#/components/examples/createLMD"
+              },
+              "LLD Seyna": {
+                "$ref": "#/components/examples/createLLD"
+              },
+              "LLD Seyna Assistance": {
+                "$ref": "#/components/examples/createLLDSeynaAssistance"
+              },
+              "LLD Seyna Particulier": {
+                "$ref": "#/components/examples/createLLDIndividual"
+              },
+              "LLD Wakam": {
+                "$ref": "#/components/examples/createLLDWakam"
+              }
+            },
+            "schema": {
+              "$ref": "#/components/schemas/contract_body"
+            }
+          }
+        }
+      },
+      "postSimpleQuote": {
+        "description": "Body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/simple_quote_body"
+            }
+          }
+        }
+      },
+      "deleteContract": {
+        "description": "Body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/contract_delete_body"
+            }
+          }
+        }
+      },
+      "patchContract": {
+        "content": {
+          "application/json": {
+            "examples": {
+              "Mise à jour des dates du contrat": {
+                "$ref": "#/components/examples/UpdateContractDates"
+              },
+              "Swap d'un produit": {
+                "$ref": "#/components/examples/UpdateContractSwapProduct"
+              }
+            },
+            "schema": {
+              "$ref": "#/components/schemas/put_contract_body"
+            }
+          }
+        }
+      },
+      "postProductInContract": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/post_product_in_contract"
+            }
+          }
+        }
+      },
+      "deleteProductInContract": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/product_in_contract_delete_body"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "resCreateLCD": {
+        "value": {
+          "status": "success",
+          "contract": {
+            "cid": "8640RJKN5W509",
+            "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+            "created_date": "2022-11-24T14:36:41.136Z",
+            "updated_date": "2022-11-24T14:36:41.136Z",
+            "start_date": "2022-11-24T14:36:41.136Z",
+            "end_date": "2022-11-25T14:36:41.136Z",
+            "status": "open",
+            "contract_type": "LCD",
+            "test": true,
+            "products": {
+              "030ff0c7-1f2c-4f8f-978b-d0212214a015": {
+                "product_id": "UIYTYGjdsgqdhgq9867gdh",
+                "start_date": "2022-11-24T14:36:41.136Z",
+                "end_date": "2022-11-25T14:36:41.136Z",
+                "status": "open",
+                "data": {
+                  "product_marked": "75657",
+                  "user_name": "Jean Germain"
+                },
+                "price": 1
+              },
+              "130ff0c7-1f2c-4f8f-978b-d0212214a015": {
+                "product_id": "UIYTYGjdsgqdhgq9867gdh",
+                "start_date": "2022-11-24T14:36:41.136Z",
+                "end_date": "2022-11-25T14:36:41.136Z",
+                "status": "open",
+                "data": {
+                  "product_marked": "1",
+                  "user_name": "Jeanne Germain"
+                },
+                "price": 1
+              }
+            },
+            "options": [
+              "break",
+              "theft"
+            ],
+            "pricing_version": "T2022A",
+            "price": 1
+          },
+          "execution_id": "qu9gi31zrkfn"
+        }
+      },
+      "resCreateLLD": {
+        "value": {
+          "status": "success",
+          "contract": {
+            "cid": "04BFMWF65C5OQ",
+            "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+            "created_date": "2022-11-24T15:01:54.747Z",
+            "updated_date": "2022-11-24T15:01:54.747Z",
+            "start_date": "2022-11-24T15:01:54.747Z",
+            "end_date": "2023-11-24T15:01:54.747Z",
+            "status": "open",
+            "contract_type": "LLD",
+            "test": true,
+            "products": {
+              "c0780885-8709-4201-862b-f28dac214403": {
+                "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+                "start_date": "2022-11-24T15:01:54.747Z",
+                "end_date": "2023-11-24T15:01:54.747Z",
+                "status": "open",
+                "data": {
+                  "user_name": "87798",
+                  "product_marked": "John Doe"
+                },
+                "price": 41.84
+              }
+            },
+            "options": [
+              "break",
+              "theft",
+              "company",
+              "home_to_work"
+            ],
+            "pricing_version": "T2022A",
+            "company": {
+              "address": "2 rue lafite",
+              "city": "PARIS-15E-ARRONDISSEMENT",
+              "company_name": "Ma super entreprise de location",
+              "country": "FR",
+              "zipcode": "75015",
+              "siren": "000000000",
+              "first_name": "Jane",
+              "last_name": "Doe"
+            },
+            "price": 41.84
+          },
+          "execution_id": "xzezdqkwf3f2"
+        }
+      },
+      "resCreateLLDWakam": {
+        "value": {
+          "status": "success",
+          "contract": {
+            "cid": "1BXQ94LTEHG9Q",
+            "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+            "created_date": "2022-11-28T08:37:34.954Z",
+            "updated_date": "2022-11-28T08:37:34.954Z",
+            "start_date": "2022-11-28T08:37:34.954Z",
+            "end_date": "2023-11-28T08:37:34.954Z",
+            "status": "open",
+            "contract_type": "LLD",
+            "test": true,
+            "products": {
+              "6891285d-a6d3-4f2a-9574-303f264e323d": {
+                "product_id": "UIYTYGjdsgqdhgq9867gdh",
+                "start_date": "2022-11-28T08:37:34.954Z",
+                "end_date": "2023-11-28T08:37:34.954Z",
+                "status": "open",
+                "data": {
+                  "user_name": "Jean Germain",
+                  "product_marked": "75657"
+                },
+                "price": 56.37
+              }
+            },
+            "options": [
+              "break",
+              "theft",
+              "company",
+              "home_to_work",
+              "natural_disaster",
+              "technological_disaster"
+            ],
+            "pricing_version": "T2022A",
+            "company": null,
+            "address": "2 rue lafite",
+            "city": "PARIS-15E-ARRONDISSEMENT",
+            "company_name": "Ma super entreprise de location",
+            "country": "FR",
+            "zipcode": "75015",
+            "siren": "000000000",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "price": 56.37
+          },
+          "execution_id": "02bdl5sv9m0u"
+        }
+      },
+      "createLCD2ProductType": {
+        "value": {
+          "contract_type": "LCD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T14:36:41.136Z",
+          "end_date": "2022-11-25T14:36:41.136Z",
+          "options": [
+            "break",
+            "theft"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdsgqdhgq9867gdh",
+              "data": {
+                "product_marked": "75657",
+                "user_name": "Jean Germain"
+              }
+            },
+            {
+              "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+              "data": {
+                "product_marked": "1",
+                "user_name": "Jeanne Germain"
+              }
+            }
+          ]
+        }
+      },
+      "createLMD": {
+        "value": {
+          "contract_type": "LMD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T14:44:32.970Z",
+          "end_date": "2022-12-24T14:44:32.970Z",
+          "options": [
+            "break",
+            "theft",
+            "company"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+              "data": {
+                "product_marked": "87798",
+                "user_name": "John Doe"
+              }
+            }
+          ],
+          "company": {
+            "company_name": "Ma super entreprise de location"
+          }
+        }
+      },
+      "createLLD": {
+        "value": {
+          "contract_type": "LLD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T15:01:54.747Z",
+          "end_date": "2023-11-24T15:01:54.747Z",
+          "options": [
+            "break",
+            "theft",
+            "company",
+            "home_to_work"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+              "data": {
+                "product_marked": "87798",
+                "user_name": "John Doe"
+              }
+            }
+          ],
+          "company": {
+            "address": "2 rue lafite",
+            "city": "PARIS-15E-ARRONDISSEMENT",
+            "company_name": "Ma super entreprise de location",
+            "country": "FR",
+            "zipcode": "75015",
+            "siren": "000000000",
+            "first_name": "Jane",
+            "last_name": "Doe"
+          }
+        }
+      },
+      "createLLDIndividual": {
+        "value": {
+          "contract_type": "LLD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T15:01:54.747Z",
+          "end_date": "2023-11-24T15:01:54.747Z",
+          "options": [
+            "break",
+            "theft",
+            "individual",
+            "home_to_work"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+              "data": {
+                "product_marked": "87798",
+                "user_name": "John Doe"
+              }
+            }
+          ],
+          "individual": {
+            "phone_number": "+3309080830",
+            "country": "FR",
+            "zipcode": "95100",
+            "city": "ARGENTEUIL",
+            "address": "19 Av. Roqisur",
+            "first_name": "Robot",
+            "last_name": "Poleud",
+            "email": "tewq@ewq.fr"
+          }
+        }
+      },
+      "createLLDSeynaAssistance": {
+        "value": {
+          "contract_type": "LLD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T16:38:16.017Z",
+          "end_date": "2023-11-24T16:38:16.017Z",
+          "options": [
+            "break",
+            "theft",
+            "company",
+            "home_to_work",
+            "assistance"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdg3Qdhgq9867gdh",
+              "data": {
+                "product_marked": "87798",
+                "user_name": "John Doe"
+              }
+            }
+          ],
+          "company": {
+            "address": "2 rue lafite",
+            "city": "PARIS-15E-ARRONDISSEMENT",
+            "company_name": "Ma super entreprise de location",
+            "country": "FR",
+            "zipcode": "75015",
+            "siren": "000000000",
+            "first_name": "Jane",
+            "last_name": "Doe"
+          }
+        }
+      },
+      "createLLDWakam": {
+        "value": {
+          "contract_type": "LLD",
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-28T08:37:34.954Z",
+          "end_date": "2023-11-28T08:37:34.954Z",
+          "company": {
+            "address": "2 rue lafite",
+            "city": "PARIS-15E-ARRONDISSEMENT",
+            "company_name": "Ma super entreprise de location",
+            "country": "FR",
+            "zipcode": "75015",
+            "siren": "000000000",
+            "first_name": "Jane",
+            "last_name": "Doe"
+          },
+          "options": [
+            "break",
+            "theft",
+            "company",
+            "home_to_work",
+            "natural_disaster",
+            "technological_disaster"
+          ],
+          "products": [
+            {
+              "product_id": "UIYTYGjdsgqdhgq9867gdh",
+              "data": {
+                "product_marked": "75657",
+                "user_name": "Jean Germain"
+              }
+            }
+          ]
+        }
+      },
+      "UpdateContractDates": {
+        "value": {
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "start_date": "2022-11-24T14:36:41.136Z",
+          "end_date": "2022-11-25T14:36:41.136Z"
+        }
+      },
+      "UpdateContractSwapProduct": {
+        "value": {
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "products": {
+            "property1": {
+              "product_marked": "75657",
+              "user_name": "Jean Germain",
+              "internal_id": "UIYTYGj"
+            }
+          }
+        }
+      },
+      "UpdateContractProductDates": {
+        "value": {
+          "uid": "qBaWdy6r3Lc3GkXTn374dFrnoN22",
+          "products": {
+            "property1": {
+              "start_date": "2022-11-24T14:36:41.136Z",
+              "end_date": "2022-11-25T14:36:41.136Z"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "key": []
+    }
+  ]
+}
