@@ -1,0 +1,420 @@
+---
+title: 'Contrats'
+description: ''
+icon: 'text-size'
+---
+
+Pour créer un contrat [éxecutez cette requête](/api#tag/Contracts/paths/~1contracts_2_0/post), une fois éxecutée la
+réponse contient un _identifiant de
+contrat_ nommé __cid__ dans l'objet __contract__ avec lequel vous pouvez effectuer des actions liées à ce contrat :
+_[modifications](/api#tag/Contracts/paths/~1contracts_2_0~1%7Bcid%7D/patch), [ajout de produits](/api#tag/Contracts/paths/~1contracts_2_0~1%7Bcid%7D~1products/post), [résiliation de produits](/api#tag/Contracts/paths/~1contracts_2_0~1%7Bcid%7D~1products/delete), [résiliation](/api#tag/Contracts/paths/~1contracts_2_0~1%7Bcid%7D/delete)_.
+
+#### ⚠️ Certains champs sont obligatoires et susceptibles d'avoir certaines contraintes. Se référencer à la définition de corps de requête
+
+### Erreurs
+
+<details>
+    <summary>contrat</summary>
+
+    | Code | Champ         | Description                                                            | Correction                                                                                                                                                                                                                                                                         |
+    |:----:|---------------|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | 1000 | start_date    | la **start_date** se trouve dans le passé                              | Définir **start_date** dans le futur                                                                                                                                                                                                                                               |
+    | 1001 | end_date      | la **end_date** se trouve dans le passé de **start_date**              | Définir **end_date** dans le futur par rapport à **start_date**                                                                                                                                                                                                                    |
+    | 1002 | end_date      | la durée du contrat n'est pas conforme par rapport au type du contract | **LCD**: entre **1 jour** et **31 jours**<br/> **LMD**: entre **1 mois** et **12 mois**<br/> **LLD**: entre **12 mois** et **60 mois**                                                                                                                                             |
+    | 1003 | contract_type | vous n'êtes pas autorisé à créer ce type de contrat                    | Contacter **Tulip**                                                                                                                                                                                                                                                                |
+    | 1004 | contract_type | **contract_type** ne correspond pas à une valeur attendu               | **contract_type** = "LCD" ou "LMD" ou "LLD"                                                                                                                                                                                                                                        |
+    | 1005 | end_date      | **end_date** est un champ requis                                       | Définir **end_date**                                                                                                                                                                                                                                                               |
+    | 1006 | contract_type | **contract_type** est un champ requis                                  | Définir **contract_type**                                                                                                                                                                                                                                                          |
+    | 1007 | products      | **products** doit contenir au minimum un élément                       | Définir au moins **un élément**                                                                                                                                                                                                                                                    |
+    | 1008 | options       | **options** est un champ requis                                        | Définir **options**                                                                                                                                                                                                                                                                |
+    | 1009 | options       | **options** à des éléments requis                                      | **options** doit contenir à minima "break" et "theft"                                                                                                                                                                                                                              |
+    | 1010 | options       | **options** ne correspond pas aux valeurs attendu                      | **options**: "assistance", "break", "theft", "home_to_work", "pro", "rc", "ia", "sharing", "transportation", "individual", "company", "loa"                                                                                                                                        |
+    | 1011 | documents     | l'identifiant du **document** n'existe pas                             | Définir un **id de document** correcte                                                                                                                                                                                                                                             |
+    | 1012 | uid           | **uid** est un champ requis                                            | Définir **uid**. **uid** représente l'identifiant du loueur                                                                                                                                                                                                                        |
+    | 1013 | company       | **company** est un champ requis                                        | Définir **company**                                                                                                                                                                                                                                                                |
+    | 1014 | individual    | **individual** est un champ requis                                     | Définir **individual**                                                                                                                                                                                                                                                             |
+    | 1015 | options       | **options** à des éléments requis                                      | **options** doit contenir à minima "break", "theft", "natural_disaster", "technological_disaster". Il doit également contenir une des options suivantes: "company" ou "individual". Il doit également contenir le cas d'usage du produit: "home_to_work" ou "pro" ou "transporter" |
+    | 1016 | ia            | **ia** est un champ requis                                             | Définir **ia**                                                                                                                                                                                                                                                                     |
+    | 1017 | ia            | **ia** ne correspond pas aux valeurs attendu                           | Définir un objet **ia** valide. **ia** doit contenir **package** et **zipcode**. **package** est un chiffre sélectionnant le pack souhaité (voir [PackagesIA](#tags/)).                                                                                                            |
+    | 1018 | options       | **options** à des éléments requis                                      | **options** doit contenir à minima "break" et "theft"                                                                                                                                                                                                                              |
+    | 1019 | options       | **options** à des éléments requis                                      | **options** doit contenir à minima "break" et "theft"                                                                                                                                                                                                                              |
+    | 1020 | options       | **options** à des éléments requis                                      | **options** doit contenir à minima "break" et "theft". Il doit également contenir une des options suivantes: "company" ou "individual".                                                                                                                                            |
+    | 1050 | start_date    | Le contrat à démarré il y a plus de 4h                                 | La **start_date** ne peu plus être modifier 4h après le début du contrat                                                                                                                                                                                                           |
+    | 1051 | contract      | Le contrat n'existe pas                                                | **cid** est probablement incorrect                                                                                                                                                                                                                                                 |
+    | 1052 | status        | Le contrat n'est pas ouvert                                            |                                                                                                                                                                                                                                                                                    |
+
+</details>
+
+<details>
+    <summary>company</summary>
+
+    | Code | Champ        | Description                          | Correction                                                                       |
+    |:----:|--------------|--------------------------------------|----------------------------------------------------------------------------------|
+    | 1100 | company_name | **company_name** est un champ requis | Définir **company_name**                                                         |
+    | 1101 | siren        | **siren** est un champ requis        | Définir **siren**                                                                |
+    | 1102 | siren        | **siren** n'est pas correct          | **siren** doit contenir 9 caractères                                             |
+    | 1103 | first_name   | **first_name** est un champ requis   | Définir **first_name**                                                           |
+    | 1104 | last_name    | **last_name** est un champ requis    | Définir **last_name**                                                            |
+    | 1105 | address      | **address** est un champ requis      | Définir **address**                                                              |
+    | 1106 | zipcode      | **zipcode** est un champ requis      | Définir **zipcode**                                                              |
+    | 1107 | city         | **city** est un champ requis         | Définir **city**                                                                 |
+    | 1108 | country      | **country** est un champ requis      | Définir **country**                                                              |
+    | 1106 | zipcode      | **zipcode** n'est pas correct        | **zipcode** doit être valide                                                     |
+    | 1107 | city         | **city** n'est pas correct           | **city** doit être sous sa forme normalisée ([@voir Villes et codes postaux](#)) |
+    | 1108 | country      | **country** n'est pas correct        | **country**: "FR"                                                                |
+    | 1109 | company      | **company** est un n'est pas correct | L'objet **company** ne convient pas, ce référé à la doc OpenAPI                  |
+    | 1150 | company      | **company** est un champ bloqué      | Impossible de modifier **company**                                               |
+
+</details>
+
+<details>
+    <summary>individual</summary>
+
+    | Code | Champ        | Description                             | Correction                                                                       |
+    |:----:|--------------|-----------------------------------------|----------------------------------------------------------------------------------|
+    | 1400 | first_name   | **first_name** est un champ requis      | Définir **first_name**                                                           |
+    | 1401 | last_name    | **last_name** est un champ requis       | Définir **last_name**                                                            |
+    | 1402 | address      | **address** est un champ requis         | Définir **address**                                                              |
+    | 1403 | zipcode      | **zipcode** est un champ requis         | Définir **zipcode**                                                              |
+    | 1404 | city         | **city** est un champ requis            | Définir **city**                                                                 |
+    | 1405 | phone_number | **phone_number** est un champ requis    | Définir **phone_number**                                                         |
+    | 1406 | country      | **country** est un champ requis         | Définir **country**                                                              |
+    | 1407 | zipcode      | **zipcode** n'est pas correct           | **zipcode** doit être valide                                                     |
+    | 1408 | city         | **city** n'est pas correct              | **city** doit être sous sa forme normalisée ([@voir Villes et codes postaux](#)) |
+    | 1409 | country      | **country** n'est pas correct           | **country**: "FR"                                                                |
+    | 1410 | individual   | **individual** est un n'est pas correct | L'objet **individual** ne convient pas, ce référé à la doc OpenAPI               |
+    | 1450 | individual   | **individual** est un champ bloqué      | Impossible de modifier **individual**                                            |
+
+</details>
+
+<details>
+    <summary>products</summary>
+
+    | Code | Champ      | Description                                                                   | Correction                                     |
+    |:----:|------------|-------------------------------------------------------------------------------|------------------------------------------------|
+    | 1200 | product_id | **product_id** est un champ requis                                            | Définir **product_id**                         |
+    | 1201 | product_id | l'identifiant du produit n'existe pas                                         | Définir un **identifiant de produit** correcte |
+    | 1202 | product_id | vous n'avez pas les permissions pour créer un contrat avec ce type de produit | contacter **Tulip**                            |
+    | 1203 | documents  | l'identifiant du **document** n'existe pas                                    | Définir un **id de document** correcte         |
+    | 1220 | data       | **data** est un champ requis lorsque le produit est de type *bike*            | Définir **data**                               |
+    | 1221 | products   | **products** est invalide                                                     | Définir un objet **products** valide           |
+
+</details>
+
+<details>
+    <summary>data ➡️ bike</summary>
+
+    | Code | Champ          | Description                                                  | Correction                 |
+    |:----:|----------------|--------------------------------------------------------------|----------------------------|
+    | 1300 | user_name      | **user_name** est un champ requis pour créer ce contrat      | Définir **user_name**      |
+    | 1301 | product_marked | **product_marked** est un champ requis pour créer ce contrat | Définir **product_marked** |
+    | 1350 | status         | Le produit n'existe pas ou est clos ou résilié               |                            |
+    | 1351 | end_date       | **end_date** est dans le passé                               |                            |
+    | 1352 | end_date       | **end_date** est dans le future du contrat                   |                            |
+
+</details>
+
+### Exemples
+
+#### Création d'un devis
+
+<details>
+    <summary>Devis LCD avec un produit existant</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts?preview=true' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2021-09-30T00:00:00.000Z",
+        "contract_type": "LCD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_id": "5f9b2b3b",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789"
+    }
+    }
+        ]
+    }
+    ```
+</details>
+
+<details>
+    <summary>Devis LCD avec définition d'un produit</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts?preview=true' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2021-09-30T00:00:00.000Z",
+        "contract_type": "LCD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_type": "bike",
+        "product_subtype": "standard",
+        "value_excl": 1100
+    }
+        ]
+    }
+    ```
+
+</details>
+
+<details>
+    <summary>Devis LLD avec un produit existant</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts?preview=true' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2023-09-01T00:00:00.000Z",
+        "contract_type": "LLD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_id": "5f9b2b3b",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789"
+    }
+    }
+        ]
+    }
+    ```
+
+</details>
+
+<details>
+    <summary>Devis LLD avec définition d'un produit</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts?preview=true' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2023-09-01T00:00:00.000Z",
+        "contract_type": "LLD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_type": "bike",
+        "product_subtype": "standard",
+        "value_excl": 1100
+    }
+        ]
+    }
+    ```
+
+</details>
+
+#### Création d'un contrat
+
+<details>
+    <summary>Contrat LCD avec un produit existant</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2021-09-30T00:00:00.000Z",
+        "contract_type": "LCD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_id": "5f9b2b3b",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789"
+    }
+    }
+        ]
+    }
+    ```
+</details>
+
+<details>
+    <summary>Contrat LCD avec définition d'un produit</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2021-09-30T00:00:00.000Z",
+        "contract_type": "LCD",
+        "options": [
+        "break",
+        "theft"
+        ],
+        "products": [
+    {
+        "product_type": "bike",
+        "product_subtype": "standard",
+        "value_excl": 1100,
+        "brand": "Pelago",
+        "model": "Brooklyn",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789"
+    }
+    }
+        ]
+    }
+    ```
+
+</details>
+
+<details>
+    <summary>Contrat LLD avec un produit existant</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2023-09-01T00:00:00.000Z",
+        "contract_type": "LLD",
+        "options": [
+        "break",
+        "theft",
+        "individual"
+        ],
+        "products": [
+    {
+        "product_id": "5f9b2b3b",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789"
+    }
+    }
+        ],
+        "individual": {
+        "phone_number": "0600000000",
+        "country": "FR",
+        "zipcode": "75001",
+        "city": "PARIS-1ER-ARRONDISSEMENT",
+        "address": "1 RUE DE RIVOLI",
+        "first_name": "Pierre",
+        "last_name": "Dupont",
+        "email": "pierredupont@example.com"
+    }
+    }
+    ```
+
+</details>
+
+<details>
+    <summary>Contrat LLD avec définition d'un produit</summary>
+
+    ```bash
+    curl --location '$TULIP_API_URL/v2/contracts' \
+    --header 'key: $TULIP_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data "$TULIP_BODY_JSON"
+    ```
+
+    ```json
+    {
+        "uid": "1b0b2b3b4b5b",
+        "start_date": "2021-09-01T00:00:00.000Z",
+        "end_date": "2023-09-01T00:00:00.000Z",
+        "contract_type": "LLD",
+        "options": [
+        "break",
+        "theft",
+        "individual"
+        ],
+        "products": [
+    {
+        "product_type": "bike",
+        "product_subtype": "standard",
+        "value_excl": 1100,
+        "brand": "Pelago",
+        "model": "Brooklyn",
+        "data": {
+        "user_name": "Pierre Dupont",
+        "product_marked": "123456789",
+        "internal_id": "bk-123456789"
+    }
+    }
+        ],
+        "individual": {
+        "phone_number": "0600000000",
+        "country": "FR",
+        "zipcode": "75001",
+        "city": "PARIS-1ER-ARRONDISSEMENT",
+        "address": "1 RUE DE RIVOLI",
+        "first_name": "Pierre",
+        "last_name": "Dupont",
+        "email": "pierredupont@example.com"
+    }
+    }
+    ```
+
+</details>
+
+___

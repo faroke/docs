@@ -1,0 +1,13 @@
+---
+title: 'Produits'
+description: ''
+icon: 'map'
+---
+
+Pour assurer un produit il faut préalablement le créer.
+
+Pour se faire il existe une [requête](/api#tag/Products), une fois exécutée la réponse contient les différentes informations
+transmises et un champ de donnée ajouter nommée __product_id__ avec lequel vous pouvez effectuer des actions liées à ce
+produit : _[modifications](/api#tag/Products/paths/~1products_2_0~1%7Bproduct_id%7D/patch), [suppression](/api#tag/Products/paths/~1products_2_0~1%7Bproduct_id%7D/delete)_. Il sera également utilisé pour créer des contrats.
+
+**⚠️ Certains champs sont obligatoires et susceptibles d'avoir certaines contraintes. Se référencer à la définition de corps de requête**

@@ -33,19 +33,14 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "S'intégrer en API avec Tulip",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "url": "https://mytulip.io"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "#"
     }
   ],
   "navigation": [
@@ -55,24 +50,49 @@
     },
     {
       "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "pages": ["essentials/auth", "essentials/loueurs", "essentials/produits", "essentials/contrats", "essentials/city-zipcode", "essentials/types"]
     },
     {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
+      "group": "Renters",
+        "pages": [
+            "api-reference/endpoint/renters/create",
+            "api-reference/endpoint/renters/read",
+            "api-reference/endpoint/renters/read-all"
+        ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Produits",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/products/create",
+        "api-reference/endpoint/products/read",
+        "api-reference/endpoint/products/read-all",
+        "api-reference/endpoint/products/update",
+        "api-reference/endpoint/products/delete"
       ]
+    },
+    {
+      "group": "Contrats",
+        "pages": [
+            "api-reference/endpoint/contracts/create",
+            "api-reference/endpoint/contracts/read",
+            "api-reference/endpoint/contracts/read-all",
+            "api-reference/endpoint/contracts/update",
+            "api-reference/endpoint/contracts/delete",
+            "api-reference/endpoint/contracts/create-product",
+            "api-reference/endpoint/contracts/delete-product"
+        ]
+    },
+    {
+      "group": "Géo",
+        "pages": [
+            "api-reference/endpoint/geo/read"
+        ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "linkedin": "https://www.linkedin.com/company/mytulip/",
+    "twitter": "https://mobile.twitter.com/mytulip_io",
+    "facebook": "https://www.facebook.com/MyTulip.io",
+    "instagram": "https://www.instagram.com/tulip_fr/?hl=fr"
   }
 }

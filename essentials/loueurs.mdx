@@ -1,0 +1,30 @@
+---
+title: 'Loueurs'
+description: ''
+icon: 'gear'
+---
+
+Pour créer un contrat, vous devez désigner un *loueur* par son **identifiant**. Un loueur peut accéder à cet **identifiant** depuis
+leur espace [mytulip](https://mytulip.io/). Ils doivent donc vous transmettre leurs identifiants.
+Une fois en possession d'un nouvel **identifiant loueur**, il doit être ajouté à votre compte.
+
+## Récupérer les loueurs
+
+Pour récupérer la liste des loueurs présent sur votre compte, [executez cette requête](/api#tag/Renters/paths/~1renters_2_0/get)
+
+## Ajout d'un loueur
+
+Pour ajouter un loueur à votre compte, [executez cette requête](/api#tag/Renters/paths/~1renters_2_0/post)
+
+À présent, le *nouveau loueur* est relié à votre compte, vous pouvez donc utiliser le combo **clé API** et **identifiant loueur** pour créer de **nouveau contrats**.
+
+<details>
+    <summary>Erreurs</summary>
+
+    | Code | Champ     | Description                                   | Correction                        |
+    |:----:|-----------|-----------------------------------------------|-----------------------------------|
+    | 2000 | renter_id | **renter_id** est un champ requis             | Définir un **renter_id**          |
+    | 2001 | renter_id | **renter_id** n'est pas correcte              | Définir un **renter_id** correcte |
+    | 2002 | renter_id | **renter_id** est déjà associé à votre compte |                                   |
+
+</details>
